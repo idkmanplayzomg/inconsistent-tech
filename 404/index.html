@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>404 - Lost in the Void</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #eee;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      padding: 50px;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0.2em;
+      animation: flicker 1.5s infinite;
+    }
+    p {
+      font-size: 1.2em;
+      margin-top: 0;
+    }
+    a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    img {
+      margin-top: 30px;
+      width: 200px;
+      border: 2px solid #00ffff;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>404</h1>
+  <p>This page wandered off... and never came back.</p>
+  <a href="/" title="Go back to homepage">Return to safety</a>
+  <br>
+  <img src="https://inconsistent.zapto.org/Capture.PNG" alt="Open-AMI Logo">
+
+  <audio autoplay>
+    <source src="https://www.soundjay.com/button/sounds/button-10.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+</body>
+</html>
