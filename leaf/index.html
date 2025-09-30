@@ -2,249 +2,259 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Admin Notes Panel</title>
+  <title>Public Notes</title>
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      --bg: #121212;
+      --card: #1e1e1e;
+      --text: #e6e6e6;
+      --accent: #4caf7d;
+      --note-bg: #1b1b1b;
+    }
+
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
       margin: 0;
-      padding: 0;
-      background: #f4f6f8;
-      color: #333;
+      padding: 20px;
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
     }
 
     .container {
       max-width: 800px;
-      margin: 40px auto;
-      background: #fff;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin: auto;
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: background 0.3s;
     }
 
-    h2, h3 {
-      margin-top: 0;
-      color: #2c3e50;
-    }
+    h2 { color: var(--accent); margin-top: 0; }
 
-    pre {
-      background: #ecf0f1;
-      padding: 15px;
-      border-radius: 6px;
+    .note {
+      padding: 12px;
+      border: 1px solid #4442;
+      border-radius: 8px;
+      background: var(--note-bg);
       white-space: pre-wrap;
       word-wrap: break-word;
+      transition: background 0.3s;
     }
 
-    button {
-      background: #3498db;
-      color: #fff;
-      padding: 12px 20px;
-      border: none;
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0;
+      border: 1px solid #6664;
       border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    button:hover {
-      background: #2980b9;
-      transform: scale(1.05);
+      font-size: 1rem;
+      box-sizing: border-box;
+      background: var(--card);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s, border 0.3s;
     }
 
     textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
+      min-height: 300px;
+      resize: vertical;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 10px 16px;
       border-radius: 6px;
-      font-size: 16px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: background 0.3s;
     }
+    .btn:hover { filter: brightness(0.9); }
 
-    #adminPanel {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: all 0.4s ease;
-    }
+    #editor { display: none; margin-top: 20px; }
+    #status { font-size: 0.9rem; color: #888; margin: 10px 0; }
 
-    #adminPanel.show {
-      max-height: 1000px;
-      opacity: 1;
-      margin-top: 30px;
-    }
+    /* Overlays */
+    #overlay, #errorOverlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 10; }
 
-    #loginModal {
+    /* Login & Error Modals */
+    #loginPanel, #errorDialog {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      backdrop-filter: blur(8px);
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-
-    #loginModal.active {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .modal-content {
-      background: white;
-      padding: 30px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 320px;
+      background: var(--card);
       border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-      text-align: center;
-      animation: slideIn 0.4s ease;
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 15px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    .error-screen {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      padding: 20px;
+      z-index: 20;
       display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      animation: fadeIn 0.3s ease;
+      transition: background 0.3s, color 0.3s;
       text-align: center;
     }
 
-    .error-screen.show {
-      display: flex;
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }
 
-    .red-x {
-      font-size: 100px;
-      color: red;
-      animation: popIn 0.4s ease;
-    }
+    #loginPanel h3 { margin: 10px 0 6px; font-size: 1.1rem; color: var(--accent); }
+    .close-btn { float: right; background: none; border: none; color: #999; font-size: 1.3rem; cursor: pointer; }
 
-    .error-text {
-      font-size: 20px;
-      margin-top: 20px;
-      color: red;
-    }
+    .error-icon { font-size: 3rem; color: red; margin-bottom: 10px; }
+    .error-code { color: red; font-weight: bold; margin-top: 8px; }
+    .top-controls { display: flex; gap: 10px; margin-bottom: 10px; }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    /* Shake animation */
+    @keyframes shake {
+      0%, 100% { transform: translate(-50%, -50%); }
+      20%, 60% { transform: translate(calc(-50% - 10px), -50%); }
+      40%, 80% { transform: translate(calc(-50% + 10px), -50%); }
     }
-
-    @keyframes slideIn {
-      from { transform: translateY(-30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes popIn {
-      0% { transform: scale(0); opacity: 0; }
-      80% { transform: scale(1.2); opacity: 1; }
-      100% { transform: scale(1); }
-    }
+    .shake { animation: shake 0.4s; }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h2>📓 Shared Notes</h2>
-    <pre id="notesDisplay">Loading notes...</pre>
-    <hr>
-    <button onclick="openLogin()">🔐 Admin Logon</button>
+    <h2>Public Note</h2>
+    <div class="top-controls">
+      <button id="showLoginBtn" class="btn">Log in</button>
+      <button id="toggleDark" class="btn">☀️ Light Mode</button>
+    </div>
+    <div id="publicNote" class="note">Loading…</div>
+    <div id="status">Not signed in</div>
 
-    <div id="adminPanel">
-      <h3>✏️ Edit Notes</h3>
-      <form id="editorForm">
-        <textarea id="notesEditor" rows="10"></textarea><br>
-        <button type="submit">💾 Save Notes</button>
-      </form>
+    <div id="editor">
+      <textarea id="editorContent"></textarea>
+      <button id="btnSave" class="btn">Save</button>
+      <button id="btnSignOut" class="btn">Sign out</button>
     </div>
   </div>
 
-  <!-- Login Modal -->
-  <div id="loginModal">
-    <div class="modal-content" id="loginBox">
-      <h3>Admin Login</h3>
-      <input type="password" id="passwordInput" placeholder="Enter admin password">
-      <button onclick="checkPassword()">Login</button>
-    </div>
+  <div id="overlay"></div>
 
-    <div class="error-screen" id="errorScreen">
-      <div class="red-x">❌</div>
-      <div class="error-text">Incorrect Password</div>
-      <button onclick="goBack()">🔙 Go Back</button>
-    </div>
+  <div id="loginPanel">
+    <button class="close-btn" id="closeLogin">&times;</button>
+    <h3>Email Login</h3>
+    <input id="emailInput" type="text" placeholder="Email">
+    <input id="pwdInput" type="password" placeholder="Password">
+    <button id="btnEmailLogin" class="btn">Sign in</button>
+    <h3>Quick Unlock</h3>
+    <input id="simplePwd" type="password" placeholder="Password">
+    <button id="btnSimpleLogin" class="btn">Unlock</button>
   </div>
 
-  <script>
-    const PASSWORD = "79204";
+  <div id="errorOverlay"></div>
+  <div id="errorDialog">
+    <div class="error-icon">❌</div>
+    <div id="errorMessage">Something went wrong</div>
+    <div id="errorCode" class="error-code"></div>
+    <button id="closeError" class="btn">Close</button>
+  </div>
 
-    fetch('notes.txt')
-      .then(response => response.text())
-      .then(data => {
-        document.getElementById("notesDisplay").textContent = data;
-        document.getElementById("notesEditor").value = data;
-      })
-      .catch(() => {
-        document.getElementById("notesDisplay").textContent = "⚠️ Failed to load notes.";
-      });
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, signInAnonymously, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
-    function openLogin() {
-      document.getElementById("loginModal").classList.add("active");
-      document.getElementById("loginBox").style.display = "block";
-      document.getElementById("errorScreen").classList.remove("show");
+    const firebaseConfig = {
+      apiKey: "AIzaSyACgn0fMfuCT3-kbDl7eoQBW--4Vw6UMeE",
+      authDomain: "server-notes67.firebaseapp.com",
+      projectId: "server-notes67",
+      storageBucket: "server-notes67.firebasestorage.app",
+      messagingSenderId: "442575262453",
+      appId: "1:442575262453:web:1425831515c1eae4aaabbc",
+      measurementId: "G-PYF71QHYGW"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const publicNoteEl = document.getElementById("publicNote");
+    const statusEl = document.getElementById("status");
+    const editor = document.getElementById("editor");
+    const editorContent = document.getElementById("editorContent");
+    const btnSave = document.getElementById("btnSave");
+
+    const loginPanel = document.getElementById("loginPanel");
+    const overlay = document.getElementById("overlay");
+
+    const errorOverlay = document.getElementById("errorOverlay");
+    const errorDialog = document.getElementById("errorDialog");
+    const errorMessage = document.getElementById("errorMessage");
+    const errorCode = document.getElementById("errorCode");
+
+    const noteDoc = doc(db, "notes", "public");
+
+    function showError(message, code) {
+      errorMessage.textContent = message;
+      errorCode.textContent = "Error code: " + code;
+      errorOverlay.style.display = "block";
+      errorDialog.style.display = "block";
+
+      errorDialog.classList.remove("shake");
+      void errorDialog.offsetWidth;
+      errorDialog.classList.add("shake");
+
+      loginPanel.classList.remove("shake");
+      void loginPanel.offsetWidth;
+      loginPanel.classList.add("shake");
     }
 
-    function goBack() {
-      document.getElementById("loginBox").style.display = "block";
-      document.getElementById("errorScreen").classList.remove("show");
-    }
+    function hideError() { errorOverlay.style.display = "none"; errorDialog.style.display = "none"; }
 
-    function checkPassword() {
-      const input = document.getElementById("passwordInput").value;
-      const adminPanel = document.getElementById("adminPanel");
-      const modal = document.getElementById("loginModal");
+    document.getElementById("closeError").addEventListener("click", hideError);
+    errorOverlay.addEventListener("click", hideError);
 
-      if (input === PASSWORD) {
-        adminPanel.classList.add("show");
-        modal.classList.remove("active");
-        document.getElementById("passwordInput").value = "";
-      } else {
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("errorScreen").classList.add("show");
-      }
-    }
+    onSnapshot(noteDoc, (snap) => {
+      if (snap.exists()) {
+        const data = snap.data();
+        publicNoteEl.textContent = data.content || "";
+        if (editor.style.display !== "none") editorContent.value = data.content || "";
+      } else { publicNoteEl.textContent = "(no note yet)"; }
+    });
 
-    document.getElementById("editorForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const updatedNotes = document.getElementById("notesEditor").value;
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        statusEl.textContent = "Signed in";
+        editor.style.display = "block";
+        hideLogin();
+        getDoc(noteDoc).then(snap => { editorContent.value = snap.exists() ? snap.data().content || "" : ""; });
+      } else { statusEl.textContent = "Not signed in"; editor.style.display = "none"; }
+    });
 
-      fetch('save_notes.php', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: 'password=' + encodeURIComponent(PASSWORD) +
-              '&content=' + encodeURIComponent(updatedNotes)
-      })
-      .then(response => response.text())
-      .then(data => {
-        alert(data);
-        document.getElementById("notesDisplay").textContent = updatedNotes;
-      })
-      .catch(error => {
-        alert("⚠️ Error saving notes.");
-      });
+    document.getElementById("btnEmailLogin").addEventListener("click", async () => {
+      const email = document.getElementById("emailInput").value.trim();
+      const pwd = document.getElementById("pwdInput").value;
+      if (!email || !pwd) { showError("Enter email and password", "missing_fields"); return; }
+      try { await signInWithEmailAndPassword(auth, email, pwd); } 
+      catch (err) { showError("Login failed: "+err.message, err.code || "auth_error"); }
+    });
+
+    document.getElementById("btnSimpleLogin").addEventListener("click", async () => {
+      const p = document.getElementById("simplePwd").value;
+      if (p === "79204") {
+        try { await signInAnonymously(auth); } 
+        catch (err) { showError("Unlock failed: "+err.message, err.code || "anon_login_error"); }
+      } else { showError("Wrong password", "no_correct_pass"); }
+    });
+
+    btnSave.addEventListener("click", async () => { await setDoc(noteDoc, { content: editorContent.value }); });
+
+    document.getElementById("btnSignOut").addEventListener("click", () => { signOut(auth); });
+
+    function showLogin() { overlay.style.display = "block"; loginPanel.style.display = "block"; }
+    function hideLogin() { overlay.style.display = "none"; loginPanel.style.display = "none"; }
+    document.getElementById("showLoginBtn").addEventListener("click", showLogin);
+    document.getElementById("closeLogin").addEventListener("click", hideLogin);
+    overlay.addEventListener("click", hideLogin);
+
+    const toggleDark = document.getElementById("toggleDark");
+    toggleDark.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      toggleDark.textContent = document.body.classList.contains("dark") ? "☀️ Light Mode" : "🌙 Dark Mode";
     });
   </script>
-
 </body>
 </html>
