@@ -1,53 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Public Note Embed</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #121212;
-    color: #e6e6e6;
-  }
-  #publicNote {
-    padding: 16px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    min-height: 150px;
-    font-size: 1rem;
-  }
-</style>
-</head>
-<body>
-  <div id="publicNote">Loading…</div>
+<script>
+<!-- code by https://www.html-code-generator.com -->
+document.write(unescape('%3C%21DOCTYPE%20html%3E%0A%3Chtml%20lang%3D%22en%22%3E%0A%3Chead%3E%0A%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%3Ctitle%3EPublic%20Note%20Embed%3C/title%3E%0A%3Cstyle%3E%0A%20%20body%20%7B%0A%20%20%20%20margin%3A%200%3B%0A%20%20%20%20font-family%3A%20Arial%2C%20sans-serif%3B%0A%20%20%20%20background%3A%20%23121212%3B%0A%20%20%20%20color%3A%20%23e6e6e6%3B%0A%20%20%7D%0A%20%20%23publicNote%20%7B%0A%20%20%20%20padding%3A%2016px%3B%0A%20%20%20%20white-space%3A%20pre-wrap%3B%0A%20%20%20%20word-wrap%3A%20break-word%3B%0A%20%20%20%20min-height%3A%20150px%3B%0A%20%20%20%20font-size%3A%201rem%3B%0A%20%20%7D%0A%3C/style%3E%0A%3C/head%3E%0A%3Cbody%3E%0A%20%20%3Cdiv%20id%3D%22publicNote%22%3ELoading%u2026%3C/div%3E%0A%0A%20%20%3Cscript%20type%3D%22module%22%3E%0A%20%20%20%20import%20%7B%20initializeApp%20%7D%20from%20%22https%3A//www.gstatic.com/firebasejs/10.12.3/firebase-app.js%22%3B%0A%20%20%20%20import%20%7B%20getFirestore%2C%20doc%2C%20onSnapshot%20%7D%20from%20%22https%3A//www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js%22%3B%0A%0A%20%20%20%20const%20firebaseConfig%20%3D%20%7B%0A%20%20%20%20%20%20apiKey%3A%20%22AIzaSyACgn0fMfuCT3-kbDl7eoQBW--4Vw6UMeE%22%2C%0A%20%20%20%20%20%20authDomain%3A%20%22server-notes67.firebaseapp.com%22%2C%0A%20%20%20%20%20%20projectId%3A%20%22server-notes67%22%2C%0A%20%20%20%20%20%20storageBucket%3A%20%22server-notes67.firebasestorage.app%22%2C%0A%20%20%20%20%20%20messagingSenderId%3A%20%22442575262453%22%2C%0A%20%20%20%20%20%20appId%3A%20%221%3A442575262453%3Aweb%3A1425831515c1eae4aaabbc%22%2C%0A%20%20%20%20%20%20measurementId%3A%20%22G-PYF71QHYGW%22%0A%20%20%20%20%7D%3B%0A%0A%20%20%20%20const%20app%20%3D%20initializeApp%28firebaseConfig%29%3B%0A%20%20%20%20const%20db%20%3D%20getFirestore%28app%29%3B%0A%20%20%20%20const%20noteEl%20%3D%20document.getElementById%28%22publicNote%22%29%3B%0A%20%20%20%20const%20noteDoc%20%3D%20doc%28db%2C%20%22notes%22%2C%20%22public%22%29%3B%0A%0A%20%20%20%20onSnapshot%28noteDoc%2C%20%28snap%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20noteEl.textContent%20%3D%20snap.exists%28%29%20%3F%20%28snap.data%28%29.content%20%7C%7C%20%22%28no%20note%20yet%29%22%29%20%3A%20%22%28no%20note%20yet%29%22%3B%0A%20%20%20%20%20%20//%20Send%20height%20to%20parent%20for%20auto-resize%0A%20%20%20%20%20%20if%20%28window.parent%29%20%7B%0A%20%20%20%20%20%20%20%20window.parent.postMessage%28%7B%20height%3A%20noteEl.scrollHeight%20%7D%2C%20%22*%22%29%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%29%3B%0A%20%20%3C/script%3E%0A%3C/body%3E%0A%3C/html%3E%0A'));
+</script>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyACgn0fMfuCT3-kbDl7eoQBW--4Vw6UMeE",
-      authDomain: "server-notes67.firebaseapp.com",
-      projectId: "server-notes67",
-      storageBucket: "server-notes67.firebasestorage.app",
-      messagingSenderId: "442575262453",
-      appId: "1:442575262453:web:1425831515c1eae4aaabbc",
-      measurementId: "G-PYF71QHYGW"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const noteEl = document.getElementById("publicNote");
-    const noteDoc = doc(db, "notes", "public");
-
-    onSnapshot(noteDoc, (snap) => {
-      noteEl.textContent = snap.exists() ? (snap.data().content || "(no note yet)") : "(no note yet)";
-      // Send height to parent for auto-resize
-      if (window.parent) {
-        window.parent.postMessage({ height: noteEl.scrollHeight }, "*");
-      }
-    });
-  </script>
 </body>
 </html>
