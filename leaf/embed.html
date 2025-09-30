@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Public Note Embed</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #121212;
+    color: #e6e6e6;
+  }
+  #publicNote {
+    padding: 16px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    min-height: 150px;
+    font-size: 1rem;
+  }
+</style>
+</head>
+<body>
+  <div id="publicNote">Loading…</div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyACgn0fMfuCT3-kbDl7eoQBW--4Vw6UMeE",
+      authDomain: "server-notes67.firebaseapp.com",
+      projectId: "server-notes67",
+      storageBucket: "server-notes67.firebasestorage.app",
+      messagingSenderId: "442575262453",
+      appId: "1:442575262453:web:1425831515c1eae4aaabbc",
+      measurementId: "G-PYF71QHYGW"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const noteEl = document.getElementById("publicNote");
+    const noteDoc = doc(db, "notes", "public");
+
+    onSnapshot(noteDoc, (snap) => {
+      noteEl.textContent = snap.exists() ? (snap.data().content || "(no note yet)") : "(no note yet)";
+      // Send height to parent for auto-resize
+      if (window.parent) {
+        window.parent.postMessage({ height: noteEl.scrollHeight }, "*");
+      }
+    });
+  </script>
+</body>
+</html>
