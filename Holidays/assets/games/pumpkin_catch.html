@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎃 Pumpkin Catch</title>
+<style>
+body {margin:0;padding:0;background:#0d0d0d;display:flex;justify-content:center;align-items:center;height:100vh;overflow:hidden;font-family:sans-serif;color:#fff;}
+#game {position:relative;width:300px;height:500px;background:#111;border:2px solid #ff7518;border-radius:12px;overflow:hidden;}
+.pumpkin {position:absolute;width:50px;height:50px;cursor:pointer;}
+#score {position:absolute;top:10px;left:10px;font-size:1.2rem;}
+</style>
+</head>
+<body>
+<div id="game">
+  <div id="score">Score: 0</div>
+</div>
+<script>
+const game = document.getElementById('game');
+let score = 0;
+
+function spawnPumpkin() {
+  const pumpkin = document.createElement('div');
+  pumpkin.className = 'pumpkin';
+  pumpkin.style.top = '0px';
+  pumpkin.style.left = Math.random()*(game.clientWidth-50) + 'px';
+  pumpkin.style.backgroundImage = "url('../images/pumpkin.jpg')";
+  pumpkin.style.backgroundSize = 'cover';
+  pumpkin.style.backgroundPosition = 'center';
+  game.appendChild(pumpkin);
+
+  const fall = setInterval(()=>{
+    let top = parseInt(pumpkin.style.top);
+    if(top > game.clientHeight - 50) {
+      pumpkin.remove();
+      clearInterval(fall);
+    } else pumpkin.style.top = (top+5) + 'px';
+  },50);
+
+  pumpkin.onclick = ()=>{
+    score++;
+    document.getElementById('score').textContent = 'Score: ' + score;
+    pumpkin.remove();
+    clearInterval(fall);
+  };
+}
+
+setInterval(spawnPumpkin, 1500);
+</script>
+</body>
+</html>

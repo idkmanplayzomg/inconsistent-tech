@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>👻 Haunted Maze (Mobile)</title>
+<style>
+body {margin:0;padding:0;background:#0d0d0d;display:flex;flex-direction:column;align-items:center;font-family:sans-serif;color:#fff;}
+#maze {position:relative;width:300px;height:300px;background:#111;border:2px solid #ff7518;margin-top:20px;}
+.wall {position:absolute;background:#ff7518;}
+#ghost {position:absolute;width:30px;height:30px;background:#fff;border-radius:50%;top:10px;left:10px;}
+#exit {position:absolute;width:30px;height:30px;background:yellow;top:260px;left:260px;}
+.controls {margin-top:10px;display:flex;flex-wrap:wrap;width:180px;justify-content:center;gap:5px;}
+.control-btn {background:#ff7518;color:#0d0d0d;padding:10px 15px;border:none;border-radius:8px;font-size:1rem;flex:1;cursor:pointer;}
+.control-btn:active {background:#ff4500;}
+</style>
+</head>
+<body>
+<h2>👻 Haunted Maze</h2>
+<div id="maze">
+  <div class="wall" style="top:50px;left:0;width:200px;height:10px;"></div>
+  <div class="wall" style="top:150px;left:100px;width:200px;height:10px;"></div>
+  <div class="wall" style="top:100px;left:50px;width:10px;height:150px;"></div>
+  <div id="ghost"></div>
+  <div id="exit"></div>
+</div>
+
+<div class="controls">
+  <button class="control-btn" id="up">↑</button>
+  <button class="control-btn" id="left">←</button>
+  <button class="control-btn" id="down">↓</button>
+  <button class="control-btn" id="right">→</button>
+</div>
+
+<script>
+const ghost = document.getElementById('ghost');
+const maze = document.getElementById('maze');
+const walls = document.querySelectorAll('.wall');
+const exit = document.getElementById('exit');
+let pos = {x:10,y:10};
+
+function move(dx,dy){
+  let newPos = {x: pos.x+dx, y: pos.y+dy};
+  let collision=false;
+
+  walls.forEach(w=>{
+    const wRect = w.getBoundingClientRect();
+    const gRect = {left:newPos.x+maze.offsetLeft, top:newPos.y+maze.offsetTop, right:newPos.x+maze.offsetLeft+30, bottom:newPos.y+maze.offsetTop+30};
+    if(!(gRect.right<wRect.left||gRect.left>wRect.right||gRect.bottom<wRect.top||gRect.top>wRect.bottom)) collision=true;
+  });
+
+  if(!collision && newPos.x>=0 && newPos.x<=maze.clientWidth-30 && newPos.y>=0 && newPos.y<=maze.clientHeight-30){
+    pos=newPos;
+    ghost.style.left=pos.x+'px';
+    ghost.style.top=pos.y+'px';
+  }
+
+  const exitRect = exit.getBoundingClientRect();
+  const gRect = ghost.getBoundingClientRect();
+  if(!(gRect.right<exitRect.left||gRect.left>exitRect.right||gRect.bottom<exitRect.top||gRect.top>exitRect.bottom)){
+    alert('🎉 You escaped the haunted maze!');
+    pos={x:10,y:10};
+    ghost.style.left='10px';
+    ghost.style.top='10px';
+  }
+}
+
+// Button controls
+document.getElementById('up').addEventListener('click',()=>move(0,-10));
+document.getElementById('down').addEventListener('click',()=>move(0,10));
+document.getElementById('left').addEventListener('click',()=>move(-10,0));
+document.getElementById('right').addEventListener('click',()=>move(10,0));
+
+// Optional: Swipe controls for smoother mobile experience
+let touchStartX=0, touchStartY=0;
+maze.addEventListener('touchstart', e => {touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY;});
+maze.addEventListener('touchend', e=>{
+  let dx=e.changedTouches[0].clientX-touchStartX;
+  let dy=e.changedTouches[0].clientY-touchStartY;
+  if(Math.abs(dx)>Math.abs(dy)){
+    if(dx>0) move(10,0); else move(-10,0);
+  } else {
+    if(dy>0) move(0,10); else move(0,-10);
+  }
+});
+</script>
+</body>
+</html>
