@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎃 Halloween Surprises 👻 | Inconsistent Tech</title>
+<link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+<style>
+body{margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(#0d0d0d,#1a0f0f);color:#f8e6c2;overflow-x:hidden;}
+h1,h2{font-family:'Creepster',cursive;color:#ff7518;text-shadow:0 0 10px #ff4500;}
+h1{text-align:center;margin:1rem 0;font-size:2.5rem;animation:flicker 2s infinite alternate;}
+h2{margin-top:2rem;font-size:1.8rem;}
+@keyframes flicker{0%{opacity:1;text-shadow:0 0 15px #ff7518;}50%{opacity:0.8;text-shadow:0 0 8px #ff4500;}100%{opacity:1;text-shadow:0 0 20px #ff7518;}}
+.container{max-width:1000px;margin:auto;padding:1rem;}
+.section{margin-bottom:2rem;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
+.card{background:#1a0f0f;padding:0.5rem;border-radius:12px;text-align:center;box-shadow:0 0 12px #ff660033;transition:transform 0.2s ease;}
+.card:hover{transform:scale(1.05);box-shadow:0 0 18px #ff660066;}
+.card img,.card video,.card iframe{width:100%;border-radius:8px;margin-bottom:0.5rem;border:2px solid #ff7518;}
+.btn{display:inline-block;background:#ff7518;color:#0d0d0d;font-family:'Creepster',cursive;padding:1rem 2rem;margin:1rem auto;border-radius:12px;font-size:1.2rem;cursor:pointer;box-shadow:0 0 12px #ff4500;transition:0.3s;text-decoration:none;}
+.btn:hover{box-shadow:0 0 20px #ff7518;transform:scale(1.05);}
+.spooky{position:fixed;top:-50px;font-size:2rem;pointer-events:none;animation:floatDown linear forwards;}
+@keyframes floatDown{0%{transform:translateY(-50px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(360deg);opacity:0;}}
+@media(max-width:600px){h1{font-size:2rem;} h2{font-size:1.4rem;}}
+</style>
+</head>
+<body>
+<h1>🎃 Halloween Surprises 👻</h1>
+<div class="container">
+
+<div style="text-align:center;" class="section">
+<button class="btn" id="halloweenBtn">🎃 Click for a Scary Surprise 🎃</button>
+</div>
+
+<div class="section">
+<h2>💀 Spooky Videos</h2>
+<div class="grid">
+<div class="card"><video src="assets/videos/creepy_pumpkin.mp4" autoplay loop muted></video><div>🎃 Creepy Pumpkin Animation</div></div>
+<div class="card"><video src="assets/videos/haunted_forest.mp4" autoplay loop muted></video><div>🌲 Haunted Forest Short</div></div>
+<div class="card"><video src="assets/videos/spooky_ghost.mp4" autoplay loop muted></video><div>👻 Spooky Ghost Clip</div></div>
+</div>
+</div>
+
+<div class="section">
+<h2>🕸 Haunted Images</h2>
+<div class="grid">
+<div class="card"><img src="assets/images/pumpkin.jpg" alt="Spooky Pumpkin"><div>🎃 Glowing Pumpkin</div></div>
+<div class="card"><img src="assets/images/haunted_forest.jpg" alt="Haunted Forest"><div>🌲 Haunted Forest</div></div>
+<div class="card"><img src="assets/images/ghost_figure.jpg" alt="Ghost Figure"><div>👻 Ghostly Figure</div></div>
+</div>
+</div>
+
+<div class="section">
+<h2>🎮 Halloween Fun</h2>
+<div class="grid">
+<div class="card"><iframe src="assets/games/pumpkin_catch.html" allowfullscreen></iframe><div>🦇 Pumpkin Catch Game</div></div>
+<div class="card"><iframe src="assets/games/haunted_maze.html" allowfullscreen></iframe><div>💀 Haunted Maze</div></div>
+</div>
+</div>
+
+<div class="section" style="text-align:center;">
+<button class="btn" id="jumpScareBtn">🕷 Jump Scare 🕷</button>
+</div>
+
+</div>
+
+<script>
+const emojis=["🦇","🎃","👻","🕷"];
+function spawnSpooky(){const s=document.createElement("span");s.className="spooky";s.textContent=emojis[Math.floor(Math.random()*emojis.length)];s.style.left=Math.random()*100+"vw";s.style.animationDuration=4+Math.random()*6+"s";document.body.appendChild(s);setTimeout(()=>{s.remove();},10000);}
+setInterval(spawnSpooky,1500);
+
+document.getElementById("halloweenBtn").addEventListener("click",()=>{const s=new Audio("assets/sounds/scream1.mp3"); s.play(); alert("Boo! Did we scare you?");});
+document.getElementById("jumpScareBtn").addEventListener("click",()=>{const s=new Audio("assets/sounds/scream2.mp3"); s.play(); document.body.style.background="red"; setTimeout(()=>{document.body.style.background="linear-gradient(#0d0d0d, #1a0f0f)";},500); alert("😱 Jump Scare!");});
+</script>
+</body>
+</html>
