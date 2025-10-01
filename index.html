@@ -1,144 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>@inconsistentttechBymE & Developer of Open-AMI (AI-VTUBER)</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: #181a20;
-            color: #f3f3f3;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background: #23272f;
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: 0 2px 8px #0003;
-        }
-        header h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            letter-spacing: 2px;
-        }
-        header p {
-            font-size: 1.2rem;
-            margin-top: 0.5rem;
-            color: #a0a4b8;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .updates {
-            background: #2d3140;
-            border-left: 6px solid #5e81ff;
-            padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-            box-shadow: 0 2px 8px #0002;
-        }
-        .section-title {
-            font-size: 1.7rem;
-            margin: 2rem 0 1rem 0;
-            color: #5e81ff;
-            letter-spacing: 1px;
-        }
-        .image-grid, .iframe-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .img-box {
-            background: #23272f;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px #0002;
-            text-align: center;
-            padding: 1rem;
-        }
-        .img-box img {
-            width: 100%;
-            height: 140px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-            background: #444;
-        }
-        .img-box .caption {
-            font-size: 1rem;
-            color: #a0a4b8;
-        }
-        .iframe-box {
-            background: #23272f;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px #0002;
-            overflow: hidden;
-            padding: 1rem;
-        }
-        .iframe-box iframe {
-            width: 100%;
-            height: 180px;
-            border: none;
-            border-radius: 8px;
-            background: #444;
-        }
-        .iframe-box .caption {
-            font-size: 1rem;
-            color: #a0a4b8;
-            margin-top: 0.5rem;
-        }
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.5rem; }
-            .section-title { font-size: 1.2rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>🎃 @inconsistentttechBymE | Spooky Halloween Edition 👻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+    body {
+      background: linear-gradient(#0d0d0d, #1a0f0f);
+      color: #f8e6c2;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #1a0f0f;
+      padding: 2rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 12px #ff660033;
+      border-bottom: 4px solid #ff7518;
+      position: relative;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin: 0;
+      font-family: 'Creepster', cursive;
+      color: #ff7518;
+      text-shadow: 0 0 15px #ff4500;
+      animation: flicker 2s infinite alternate;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      color: #d8bfa4;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .updates {
+      background: #261313;
+      border-left: 6px solid #ff7518;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 12px #ff660033;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin: 2rem 0 1rem 0;
+      color: #ff7518;
+      font-family: 'Creepster', cursive;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #ff4500;
+    }
+
+    .image-grid, .iframe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .img-box, .iframe-box {
+      background: #1a0f0f;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 0 12px #ff660033;
+      text-align: center;
+      padding: 1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .img-box:hover, .iframe-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px #ff660066;
+    }
+
+    .img-box img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      background: #333;
+      border: 2px solid #ff7518;
+    }
+
+    .caption {
+      font-size: 1rem;
+      color: #e6d1b3;
+    }
+
+    .iframe-box iframe {
+      width: 100%;
+      height: 180px;
+      border: 2px solid #ff7518;
+      border-radius: 8px;
+      background: #333;
+    }
+
+    a {
+      color: #ff7518;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover { text-decoration: underline; }
+
+    /* Flicker effect */
+    @keyframes flicker {
+      0% { opacity: 1; text-shadow: 0 0 15px #ff7518; }
+      50% { opacity: 0.85; text-shadow: 0 0 8px #ff4500; }
+      100% { opacity: 1; text-shadow: 0 0 20px #ff7518; }
+    }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      .section-title { font-size: 1.3rem; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>@inconsistentttechBymE</h1>
-        <p>Tech YouTuber & Creator of Open-AMI (AI-VTUBER)</p>
-    </header>
-    <div class="container">
-        <div class="updates">
-            <strong>UPDATES:</strong> open-ami is getting to V2!
-        </div>
+  <header>
+    <h1>🎃 Inconsistent Tech</h1>
+    <p>👻 Tech YouTuber & Creator of Open-AMI (AI-VTUBER)</p>
+  </header>
 
-        <div class="section-title">Images? might become links (MAYBE)</div>
-        <div class="image-grid">
-            <div class="img-box">
-                <img src="Capture.PNG" alt="Open-AMI Logo">
-                <div class="caption">Open-AMI Logo</div>
-            </div>
-            <div class="img-box">
-                <img src="https://tse4.mm.bing.net/th/id/OIP.S5AlRQcHrpCLzWUdKMWS2AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="YouTube Channel">
-                <div class="caption">YouTube Channel Banner</div>
-            </div>
-            <div class="img-box">
-                <img src="https://tse1.mm.bing.net/th/id/OIP.KpGiQEbBqq5gw8bqCHIoRAHaGE?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Tech Setup">
-                <div class="caption">Tech Setup Sneak Peek</div>
-            </div>
-        </div>
-
-        <div class="section-title">Sites</div>
-        <div class="img-grid">
-             <div class="iframe-box">
-                <iframe src="http://inconsistent.zapto.org/leaf/embed.html" title="School haha"></iframe>
-                <div class="caption"><a href="/leaf/index.html" target="_blank">open!</a></div>
-            </div>
-            <div class="iframe-box">
-                <iframe src="https://www.youtube.com/embed/QrjfnmvmlM0" title="OpenAI"></iframe>
-                <div class="caption"><a href="https://youtube.com/@InconsistentTechBymE">My Video UNLISTED!!!</a> </div>
-            </div>
-            <div class="iframe-box">
-                <iframe src="http://inconsistent.zapto.org/eaglercraft/" title="School haha"></iframe>
-                <div class="caption"><a href="/eaglercraft/index.html" target="_blank">open!</a></div>
-            </div>
-        </div>
+  <div class="container">
+    <div class="updates">
+      <strong>Spooky Update:</strong> Open-AMI V2 is coming... beware the glitches 👀
     </div>
+
+    <div class="section-title">🕸 Images (haunting your screen)</div>
+    <div class="image-grid">
+      <div class="img-box">
+        <img src="Capture.PNG" alt="Open-AMI Logo">
+        <div class="caption">👻 Open-AMI Logo</div>
+      </div>
+      <div class="img-box">
+        <img src="https://tse4.mm.bing.net/th/id/OIP.S5AlRQcHrpCLzWUdKMWS2AHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="YouTube Channel">
+        <div class="caption">🎃 YouTube Channel Banner</div>
+      </div>
+      <div class="img-box">
+        <img src="https://tse1.mm.bing.net/th/id/OIP.KpGiQEbBqq5gw8bqCHIoRAHaGE?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Tech Setup">
+        <div class="caption">🦇 Haunted Tech Setup</div>
+      </div>
+    </div>
+
+    <div class="section-title">🕷 Spooky Sites</div>
+    <div class="iframe-grid">
+      <div class="iframe-box">
+        <iframe src="http://inconsistent.zapto.org/leaf/embed.html" title="School haha"></iframe>
+        <div class="caption"><a href="/leaf/index.html" target="_blank">🔮 Open if you dare</a></div>
+      </div>
+      <div class="iframe-box">
+        <iframe src="https://www.youtube.com/embed/QrjfnmvmlM0" title="OpenAI"></iframe>
+        <div class="caption"><a href="https://youtube.com/@InconsistentTechBymE">💀 Secret Video</a></div>
+      </div>
+      <div class="iframe-box">
+        <iframe src="http://inconsistent.zapto.org/eaglercraft/" title="School haha"></iframe>
+        <div class="caption"><a href="/eaglercraft/index.html" target="_blank">🕸 Enter the darkness</a></div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
