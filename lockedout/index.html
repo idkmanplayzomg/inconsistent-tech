@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>You’ve been Locked Out!</title>
+  <style>
+    /* Basic Reset */
+    * { margin:0; padding:0; box-sizing: border-box; }
+    html, body { height:100%; width:100%; }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #111;            /* pick background colour similar to original */
+      color: #eee;                 /* pick appropriate text colour */
+      font-family: Arial, sans-serif; /* replace with original font if known */
+      text-align: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+    }
+    .emoji-img {
+      width: 120px;                /* adjust size */
+      height: auto;
+      margin: 0 auto 30px;
+      display: block;
+    }
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+    a.home-link {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #ff3366;         /* accent button colour */
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    a.home-link:hover {
+      background: #ff6699;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Emoji flash drive image -->
+    <img class="emoji-img" src="flashdrive-emoji.png" alt="USB Flash Drive Emoji">
+    <h1>You’ve been Locked out!</h1>
+    <p>Please make sure your USB Raptor Key is present :3</p>
+    <p>If you believe this is a mistake, please contact support.</p>
+    <a class="home-link" href="/">Go back to Home</a>
+  </div>
+</body>
+</html>
