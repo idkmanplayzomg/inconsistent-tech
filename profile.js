@@ -1,3 +1,8 @@
+if (!profileUid) {
+  document.body.innerHTML = "<h2 style='color:white'>Profile not found</h2>";
+  throw new Error("No uid provided in URL");
+}
+
 const firebaseConfig = {
   apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
   authDomain: "inconforum.firebaseapp.com",
@@ -75,3 +80,4 @@ if (saveBtn) {
     location.reload();
   };
 }
+
