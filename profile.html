@@ -7,28 +7,33 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="profile-bg">
+<body class="profile-page">
 
-<div class="profile-card">
+  <!-- Background handled by CSS -->
 
-  <img id="avatar" src="default-avatar.png" class="avatar">
+  <div id="profileRoot" class="profile-card">
+    <div id="profileHeader">
+      <img id="avatar" src="default-avatar.png">
+      <h2 id="username">Loading…</h2>
+    </div>
 
-  <h2 id="username">Loading…</h2>
-  <p id="bio"></p>
+    <p id="bio"></p>
 
-  <!-- EDIT UI: MUST START HIDDEN -->
-  <div id="editBox" style="display:none">
-    <input id="avatarUrl" placeholder="Avatar image URL">
-    <textarea id="bioInput" placeholder="Bio"></textarea>
-    <button id="saveProfile">Save</button>
+    <!-- Edit UI (hidden by default) -->
+    <div id="editSection" style="display:none">
+      <textarea id="bioInput" placeholder="Edit bio…"></textarea>
+      <button id="saveProfile">Save</button>
+    </div>
+
+    <h3>Posts</h3>
+    <div id="userPosts"></div>
   </div>
 
-</div>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<script src="profile.js"></script>
+  <script src="profile.js"></script>
 </body>
 </html>
