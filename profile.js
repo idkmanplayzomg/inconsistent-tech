@@ -1,8 +1,4 @@
-if (!profileUid) {
-  document.body.innerHTML = "<h2 style='color:white'>Profile not found</h2>";
-  throw new Error("No uid provided in URL");
-}
-
+// ===== FIREBASE INIT =====
 const firebaseConfig = {
   apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
   authDomain: "inconforum.firebaseapp.com",
@@ -16,68 +12,87 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// DOM (safe lookups)
+// ===== DOM =====
+const avatar = document.getElementById("avatar");
 const usernameEl = document.getElementById("username");
 const bioEl = document.getElementById("bio");
-const avatarEl = document.getElementById("avatar");
 const editBox = document.getElementById("editBox");
 const avatarInput = document.getElementById("avatarUrl");
 const bioInput = document.getElementById("bioInput");
 const saveBtn = document.getElementById("saveProfile");
 
-// Get UID from URL
+// ===== URL UID =====
 const params = new URLSearchParams(window.location.search);
 const profileUid = params.get("uid");
 
-// Fallback UI
-if (usernameEl) usernameEl.textContent = "User";
-if (bioEl) bioEl.textContent = "";
+// 🚨 HARD STOP IF NO UID
+if (!profileUid) {
+  document.body.innerHTML = "<h2 style='color:white'>No profile specified</h2>";
+  throw new Error("profileUid missing");
+}
 
-// Auth
-auth.onAuthStateChanged(async user => {
+// ===== LOAD PROFILE (READ-ONLY) =====
+async function loadProfile() {
+  try {
+    const snap = await db.collection("profiles").doc(profileUid).get();
+
+    if (!snap.exists) {
+      usernameEl.textContent = "User not found";
+      return;
+    }
+
+    const data = snap.data();
+
+    usernameEl.textContent = data.username || "User";
+    bioEl.textContent = data.bio || "";
+
+    if (data.avatar) avatar.src = data.avatar;
+
+  } catch (err) {
+    console.error("Profile read failed:", err);
+  }
+}
+
+loadProfile();
+
+// ===== AUTH + EDIT PERMISSION =====
+auth.onAuthStateChanged(user => {
   const isOwner = user && user.uid === profileUid;
 
-  if (editBox) {
-    editBox.style.display = isOwner ? "block" : "none";
-  }
+  editBox.style.display = isOwner ? "block" : "none";
 
-  try {
-    const doc = await db.collection("profiles").doc(profileUid).get();
-
-    if (doc.exists) {
-      const data = doc.data();
-
-      if (usernameEl) usernameEl.textContent = data.username || "User";
-      if (bioEl) bioEl.textContent = data.bio || "";
-
-      if (avatarEl && data.avatar) {
-        avatarEl.src = data.avatar;
+  if (isOwner) {
+    // preload editable fields
+    db.collection("profiles").doc(profileUid).get().then(snap => {
+      if (snap.exists) {
+        const d = snap.data();
+        avatarInput.value = d.avatar || "";
+        bioInput.value = d.bio || "";
       }
-
-      if (isOwner) {
-        if (avatarInput) avatarInput.value = data.avatar || "";
-        if (bioInput) bioInput.value = data.bio || "";
-      }
-    }
-  } catch (err) {
-    console.warn("Profile load failed:", err);
+    });
   }
 });
 
-// Save profile (OWNER ONLY)
-if (saveBtn) {
-  saveBtn.onclick = async () => {
-    const user = auth.currentUser;
-    if (!user || user.uid !== profileUid) return;
+// ===== SAVE PROFILE =====
+saveBtn.onclick = async () => {
+  const user = auth.currentUser;
 
+  if (!user || user.uid !== profileUid) {
+    alert("Not allowed");
+    return;
+  }
+
+  try {
     await db.collection("profiles").doc(user.uid).set({
       avatar: avatarInput.value.trim(),
       bio: bioInput.value.trim(),
       username: user.displayName || user.email
     }, { merge: true });
 
-    alert("Profile saved");
+    alert("Saved");
     location.reload();
-  };
-}
-
+  } catch (err) {
+    console.error("Save failed:", err);
+    alert("Save failed (check console)");
+  }
+};
