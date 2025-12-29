@@ -27,6 +27,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const auth = firebase.auth();
   const db = firebase.firestore();
 
+  firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log("UID:", user.uid);
+  }
+});
+
+
   // ---------- DOM ELEMENTS (SAFE) ----------
   const usernameEl = document.getElementById("username");
   const bioEl = document.getElementById("bio");
@@ -80,3 +87,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
+
