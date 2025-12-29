@@ -3,86 +3,28 @@
 <head>
   <meta charset="utf-8">
   <title>Profile</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="styles.css">
-
-  <style>
-    body {
-      min-height: 100vh;
-      margin: 0;
-      background: url("background.png") center / cover no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .profile-card {
-      width: 100%;
-      max-width: 420px;
-      background: rgba(15,15,15,0.92);
-      border-radius: 12px;
-      padding: 20px;
-      color: #fff;
-      text-align: center;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 12px;
-      background: #333;
-    }
-
-    .username {
-      font-size: 1.4em;
-      font-weight: bold;
-    }
-
-    .bio {
-      opacity: 0.85;
-      margin-top: 8px;
-    }
-
-    .edit-box {
-      display: none; /* 🔒 IMPORTANT */
-      margin-top: 16px;
-    }
-
-    .edit-box input,
-    .edit-box textarea {
-      width: 100%;
-      margin-top: 8px;
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
-    }
-
-    button {
-      margin-top: 12px;
-      padding: 10px;
-      width: 100%;
-    }
-  </style>
 </head>
 
-<body>
+<body class="profile-bg">
 
 <div class="profile-card">
-  <img id="avatar" class="avatar" src="default-avatar.png">
-  <div id="username" class="username">Loading…</div>
-  <div id="bio" class="bio"></div>
 
-  <!-- EDIT UI (HIDDEN BY DEFAULT) -->
-  <div id="editBox" class="edit-box">
+  <img id="avatar" src="default-avatar.png" class="avatar">
+
+  <h2 id="username">Loading…</h2>
+  <p id="bio"></p>
+
+  <!-- EDIT UI: MUST START HIDDEN -->
+  <div id="editBox" style="display:none">
     <input id="avatarUrl" placeholder="Avatar image URL">
     <textarea id="bioInput" placeholder="Bio"></textarea>
-    <button id="saveBtn" class="primary">Save</button>
+    <button id="saveProfile">Save</button>
   </div>
+
 </div>
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -90,4 +32,3 @@
 <script src="profile.js"></script>
 </body>
 </html>
-
