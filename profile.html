@@ -9,24 +9,18 @@
 
 <body class="profile-page">
 
-  <!-- Background handled by CSS -->
+  <div class="profile-card" id="profileCard">
+    <img id="avatar" src="default-avatar.png" alt="Avatar">
+    <h2 id="username">Loading profile…</h2>
+    <p id="bio">Please wait.</p>
 
-  <div id="profileRoot" class="profile-card">
-    <div id="profileHeader">
-      <img id="avatar" src="default-avatar.png">
-      <h2 id="username">Loading…</h2>
-    </div>
-
-    <p id="bio"></p>
-
-    <!-- Edit UI (hidden by default) -->
     <div id="editSection" style="display:none">
-      <textarea id="bioInput" placeholder="Edit bio…"></textarea>
-      <button id="saveProfile">Save</button>
+      <textarea id="bioInput"></textarea>
+      <button id="saveBtn">Save</button>
     </div>
 
     <h3>Posts</h3>
-    <div id="userPosts"></div>
+    <div id="posts">Loading posts…</div>
   </div>
 
   <!-- Firebase -->
