@@ -132,4 +132,26 @@ textarea {
   .logo-2016 {
     height: 32px;
   }
+  .profile-page {
+  background: url("Background.png") no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
 }
+
+.profile-card {
+  max-width: 600px;
+  margin: 80px auto;
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+#avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+}
+
+}
+
