@@ -88,4 +88,12 @@ db.collection("posts")
       `;
       postsDiv.appendChild(el);
     });
+
+    firebase.auth().onAuthStateChanged(user => {
+  if (user) {
+    console.log("UID:", user.uid);
+  }
+});
+
   });
+
