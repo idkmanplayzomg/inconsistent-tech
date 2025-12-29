@@ -2,44 +2,76 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Profile · Incon2131</title>
+  <title>Profile</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-<!-- 🚨 Shutdown banner -->
-<div class="shutdown-banner">
-  Google+ will shut down for consumers on April 2, 2019.
-</div>
+<main class="profile" style="display:none" id="profileRoot">
 
-<header class="topbar">
-  <img src="logo.png" class="logo-2016">
-</header>
+  <img id="avatar" class="avatar">
+  <h2 id="username"></h2>
 
-<section class="profile-header">
-  <img id="profileBanner" class="profile-banner">
-  <div class="profile-meta">
-    <img id="profileAvatar" class="profile-avatar">
-    <div>
-      <h1 id="profileName"></h1>
-      <p id="profileBio" class="muted"></p>
-    </div>
+  <!-- EDIT UI (HIDDEN BY DEFAULT) -->
+  <div id="editUI" style="display:none">
+    <input id="nameInput" placeholder="New display name">
+    <button id="saveBtn" class="primary">Save</button>
   </div>
-</section>
 
-<nav class="profile-tabs">
-  <button class="tab active">Posts</button>
-  <button class="tab">About</button>
-</nav>
-
-<main class="feed">
-  <div id="profilePosts" class="post-grid"></div>
 </main>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="profile.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
+  authDomain: "inconforum.firebaseapp.com",
+  projectId: "inconforum"
+};
+
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+const params = new URLSearchParams(location.search);
+const profileUID = params.get("uid");
+
+const root = document.getElementById("profileRoot");
+const editUI = document.getElementById("editUI");
+
+auth.onAuthStateChanged(async user => {
+
+  const snap = await db.collection("users").doc(profileUID).get();
+  if (!snap.exists) return alert("Profile not found");
+
+  const data = snap.data();
+
+  document.getElementById("username").textContent = data.username || "User";
+  document.getElementById("avatar").src = data.photo || "default.png";
+
+  root.style.display = "block";
+
+  // 🔒 OWNER CHECK (THIS IS THE FIX)
+  if (user && user.uid === profileUID) {
+    editUI.style.display = "block";
+  }
+});
+
+document.getElementById("saveBtn").onclick = async () => {
+  const val = document.getElementById("nameInput").value.trim();
+  if (!val) return;
+
+  await db.collection("users").doc(profileUID).update({
+    username: val
+  });
+
+  location.reload();
+};
+</script>
+
 </body>
 </html>
