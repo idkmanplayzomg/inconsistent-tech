@@ -1,108 +1,82 @@
-// ===== GET UID FIRST (BEFORE ANYTHING ELSE) =====
-const params = new URLSearchParams(window.location.search);
-const profileUid = params.get("uid");
+// ================================
+// profile.js — SAFE CLEAN VERSION
+// ================================
 
-// 🚨 HARD STOP IF NO UID
-if (!profileUid) {
-  document.body.innerHTML = "<h2 style='color:white'>No profile specified</h2>";
-  throw new Error("profileUid missing");
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-// ===== FIREBASE INIT =====
-const firebaseConfig = {
-  apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
-  authDomain: "inconforum.firebaseapp.com",
-  projectId: "inconforum"
-};
+  // ---------- GET PROFILE UID FIRST ----------
+  const params = new URLSearchParams(window.location.search);
+  const profileUid = params.get("uid");
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-
-
-// ===== DOM =====
-const avatar = document.getElementById("avatar");
-const usernameEl = document.getElementById("username");
-const bioEl = document.getElementById("bio");
-const editBox = document.getElementById("editBox");
-const avatarInput = document.getElementById("avatarUrl");
-const bioInput = document.getElementById("bioInput");
-const saveBtn = document.getElementById("saveProfile");
-
-
-// 🚨 HARD STOP IF NO UID
-if (!profileUid) {
-  document.body.innerHTML = "<h2 style='color:white'>No profile specified</h2>";
-  throw new Error("profileUid missing");
-}
-
-// ===== LOAD PROFILE (READ-ONLY) =====
-async function loadProfile() {
-  try {
-    const snap = await db.collection("profiles").doc(profileUid).get();
-
-    if (!snap.exists) {
-      usernameEl.textContent = "User not found";
-      return;
-    }
-
-    const data = snap.data();
-
-    usernameEl.textContent = data.username || "User";
-    bioEl.textContent = data.bio || "";
-
-    if (data.avatar) avatar.src = data.avatar;
-
-  } catch (err) {
-    console.error("Profile read failed:", err);
-  }
-}
-
-loadProfile();
-
-// ===== AUTH + EDIT PERMISSION =====
-auth.onAuthStateChanged(user => {
-  const isOwner = user && user.uid === profileUid;
-
-  editBox.style.display = isOwner ? "block" : "none";
-
-  if (isOwner) {
-    // preload editable fields
-    db.collection("profiles").doc(profileUid).get().then(snap => {
-      if (snap.exists) {
-        const d = snap.data();
-        avatarInput.value = d.avatar || "";
-        bioInput.value = d.bio || "";
-      }
-    });
-  }
-});
-
-// ===== SAVE PROFILE =====
-saveBtn.onclick = async () => {
-  const user = auth.currentUser;
-
-  if (!user || user.uid !== profileUid) {
-    alert("Not allowed");
+  if (!profileUid) {
+    document.body.innerHTML = "<h2 style='color:white'>No profile specified</h2>";
     return;
   }
 
-  try {
-    await db.collection("profiles").doc(user.uid).set({
-      avatar: avatarInput.value.trim(),
-      bio: bioInput.value.trim(),
-      username: user.displayName || user.email
-    }, { merge: true });
+  // ---------- FIREBASE INIT ----------
+  const firebaseConfig = {
+    apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
+    authDomain: "inconforum.firebaseapp.com",
+    projectId: "inconforum"
+  };
 
-    alert("Saved");
-    location.reload();
-  } catch (err) {
-    console.error("Save failed:", err);
-    alert("Save failed (check console)");
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
   }
-};
 
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
+  // ---------- DOM ELEMENTS (SAFE) ----------
+  const usernameEl = document.getElementById("username");
+  const bioEl = document.getElementById("bio");
+  const avatarEl = document.getElementById("avatar");
+  const editBox = document.getElementById("editBox");
+  const bioInput = document.getElementById("bioInput");
+  const avatarInput = document.getElementById("avatarInput");
+  const saveBtn = document.getElementById("saveProfileBtn");
+
+  // Hide edit UI by default (IMPORTANT)
+  if (editBox) editBox.style.display = "none";
+
+  // ---------- LOAD PROFILE ----------
+  db.collection("users").doc(profileUid).get()
+    .then(doc => {
+      if (!doc.exists) {
+        document.body.innerHTML = "<h2 style='color:white'>Profile not found</h2>";
+        return;
+      }
+
+      const data = doc.data();
+
+      if (usernameEl) usernameEl.textContent = data.username || "Unnamed";
+      if (bioEl) bioEl.textContent = data.bio || "";
+      if (avatarEl && data.avatar) avatarEl.src = data.avatar;
+    })
+    .catch(err => {
+      console.error("Profile load error:", err);
+    });
+
+  // ---------- AUTH CHECK ----------
+  auth.onAuthStateChanged(user => {
+    if (!user) return;
+
+    // ONLY OWNER CAN EDIT
+    if (user.uid === profileUid && editBox) {
+      editBox.style.display = "block";
+
+      if (saveBtn) {
+        saveBtn.onclick = async () => {
+          const updates = {
+            bio: bioInput ? bioInput.value : "",
+            avatar: avatarInput ? avatarInput.value : ""
+          };
+
+          await db.collection("users").doc(profileUid).set(updates, { merge: true });
+          location.reload();
+        };
+      }
+    }
+  });
+
+});
