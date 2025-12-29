@@ -12,6 +12,17 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// ===== GET UID FIRST (BEFORE ANYTHING ELSE) =====
+const params = new URLSearchParams(window.location.search);
+const profileUid = params.get("uid");
+
+// 🚨 HARD STOP IF NO UID
+if (!profileUid) {
+  document.body.innerHTML = "<h2 style='color:white'>No profile specified</h2>";
+  throw new Error("profileUid missing");
+}
+
+
 // ===== DOM =====
 const avatar = document.getElementById("avatar");
 const usernameEl = document.getElementById("username");
@@ -21,9 +32,6 @@ const avatarInput = document.getElementById("avatarUrl");
 const bioInput = document.getElementById("bioInput");
 const saveBtn = document.getElementById("saveProfile");
 
-// ===== URL UID =====
-const params = new URLSearchParams(window.location.search);
-const profileUid = params.get("uid");
 
 // 🚨 HARD STOP IF NO UID
 if (!profileUid) {
@@ -96,3 +104,4 @@ saveBtn.onclick = async () => {
     alert("Save failed (check console)");
   }
 };
+
