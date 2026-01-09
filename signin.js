@@ -1,35 +1,35 @@
-console.log("signin.js loaded");
+// Add these after auth init
+const db = firebase.firestore();
 
-// Firebase config
-const firebaseConfig = {
-  apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
-  authDomain: "inconforum.firebaseapp.com",
-  projectId: "inconforum",
-  storageBucket: "inconforum.appspot.com",
-  messagingSenderId: "1545059128",
-  appId: "1:1545059128:web:2327d2fce916a85e659fcd"
-};
+async function ensureProfile(user) {
+  const ref = db.collection("profiles").doc(user.uid);
+  const snap = await ref.get();
 
-// Init
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-// DOM
-const email = document.getElementById("email");
-const password = document.getElementById("password");
+  if (!snap.exists) {
+    await ref.set({
+      name: "+" + (user.displayName || user.email.split("@")[0]),
+      avatar: "default-avatar.png",
+      banner: "default-banner.png",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }
+}
 
 document.getElementById("googleLogin").onclick = async () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  await auth.signInWithPopup(provider);
+  const result = await auth.signInWithPopup(provider);
+  await ensureProfile(result.user);
   location.href = "index.html";
 };
 
 document.getElementById("emailLogin").onclick = async () => {
-  await auth.signInWithEmailAndPassword(email.value, password.value);
+  const result = await auth.signInWithEmailAndPassword(email.value, password.value);
+  await ensureProfile(result.user);
   location.href = "index.html";
 };
 
 document.getElementById("emailSignup").onclick = async () => {
-  await auth.createUserWithEmailAndPassword(email.value, password.value);
+  const result = await auth.createUserWithEmailAndPassword(email.value, password.value);
+  await ensureProfile(result.user);
   location.href = "index.html";
 };
