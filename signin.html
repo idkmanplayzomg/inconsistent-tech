@@ -1,110 +1,47 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Sign in</title>
+  <title>Sign in – Incon2131</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="styles.css">
-
-  <style>
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: url("Background.png") center / cover no-repeat;
-    }
-
-    .login-card {
-      width: 100%;
-      max-width: 360px;
-      background: rgba(20,20,20,0.9);
-      padding: 24px;
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .login-card img {
-      display: block;
-      margin: 0 auto 16px auto;
-      max-width: 180px;
-    }
-
-    .login-card input {
-      width: 100%;
-      margin-bottom: 12px;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-    }
-
-    .login-card button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-    }
-
-    .error {
-      color: #ff6b6b;
-      margin-top: 10px;
-      min-height: 18px;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
 </head>
-
 <body>
 
-<div class="login-card">
-  <!-- ✅ LOGO -->
-  <img src="loginlogo.png" alt="Incon2131">
+<div class="ga-card">
+  <!-- Logo -->
+  <img src="loginlogo.png" class="ga-logo" alt="Incon2131">
 
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
+  <!-- Title -->
+  <h1 class="ga-title">Sign in</h1>
+  <p class="ga-sub">Use your Google Account</p>
 
-  <button id="loginBtn" class="primary">Sign in</button>
-  <button id="signupBtn" class="btn">Create account</button>
+  <!-- Email and Password Inputs -->
+  <input id="email" class="ga-input" type="email" placeholder="Email">
+  <input id="password" class="ga-input" type="password" placeholder="Password">
 
-  <div id="error" class="error"></div>
+  <!-- Primary Button -->
+  <button id="emailLogin" class="ga-primary">Next</button>
+
+  <!-- Secondary Link -->
+  <button id="emailSignup" class="ga-link">Create account</button>
+
+  <!-- Divider -->
+  <div class="ga-divider">
+    <span>or</span>
+  </div>
+
+  <!-- Google Login -->
+  <button id="googleLogin" class="ga-google">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
+    Sign in with Google
+  </button>
 </div>
 
-<!-- FIREBASE -->
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
-  authDomain: "inconforum.firebaseapp.com",
-  projectId: "inconforum"
-};
-
-if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const errorDiv = document.getElementById("error");
-
-document.getElementById("loginBtn").onclick = async () => {
-  errorDiv.textContent = "";
-  try {
-    await auth.signInWithEmailAndPassword(email.value, password.value);
-    location.href = "index.html";
-  } catch (e) {
-    errorDiv.textContent = e.message;
-  }
-};
-
-document.getElementById("signupBtn").onclick = async () => {
-  errorDiv.textContent = "";
-  try {
-    await auth.createUserWithEmailAndPassword(email.value, password.value);
-    location.href = "index.html";
-  } catch (e) {
-    errorDiv.textContent = e.message;
-  }
-};
-</script>
-
+<script src="signin.js"></script>
 </body>
 </html>
