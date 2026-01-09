@@ -272,7 +272,37 @@ body {
 .ga-google:hover {
   background-color: #f5f5f5;
 }
+  .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  color: #7cbcff;
+  text-decoration: none;
+}
+
+.profile-card {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+}
+
 
 }
+
 
 
