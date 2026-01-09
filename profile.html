@@ -3,31 +3,28 @@
 <head>
   <meta charset="utf-8">
   <title>Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="profile-page">
+<body>
 
-  <div class="profile-card" id="profileCard">
-    <img id="avatar" src="default-avatar.png" alt="Avatar">
-    <h2 id="username">Loading profile…</h2>
-    <p id="bio">Please wait.</p>
+<div id="profile" class="profile-card">
+  <img id="avatar" class="profile-avatar">
+  <h2 id="username"></h2>
+  <p id="bio"></p>
 
-    <div id="editSection" style="display:none">
-      <textarea id="bioInput"></textarea>
-      <button id="saveBtn">Save</button>
-    </div>
-
-    <h3>Posts</h3>
-    <div id="posts">Loading posts…</div>
+  <div id="editUI" style="display:none">
+    <input type="file" id="avatarInput" accept="image/*" capture="environment">
+    <textarea id="bioInput" placeholder="Edit bio"></textarea>
+    <button id="saveBtn">Save</button>
   </div>
+</div>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-  <script src="profile.js"></script>
+<script src="profile.js"></script>
 </body>
 </html>
