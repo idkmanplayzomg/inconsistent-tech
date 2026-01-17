@@ -1,45 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Sign in – Incon2131</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+<meta charset="utf-8">
+<title>Sign in</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="auth">
 
-<div class="ga-card">
-  <!-- Logo -->
-  <img src="loginlogo.png" class="ga-logo" alt="Incon2131">
 
-  <!-- Title -->
-  <h1 class="ga-title">Sign in</h1>
-  <p class="ga-sub">Use your Google Account</p>
-
-  <!-- Email and Password Inputs -->
-  <input id="email" class="ga-input" type="email" placeholder="Email">
-  <input id="password" class="ga-input" type="password" placeholder="Password">
-
-  <!-- Primary Button -->
-  <button id="emailLogin" class="ga-primary">Next</button>
-
-  <!-- Secondary Link -->
-  <button id="emailSignup" class="ga-link">Create account</button>
-
-  <!-- Divider -->
-  <div class="ga-divider">
-    <span>or</span>
-  </div>
-
-  <!-- Google Login -->
-  <button id="googleLogin" class="ga-google">
-    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo">
-    Sign in with Google
-  </button>
+<div class="auth-card">
+<img src="loginlogo.png" class="login-logo">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button id="login">Sign in</button>
+<button id="signup">Create account</button>
+<div id="error"></div>
 </div>
 
-<!-- Firebase -->
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="signin.js"></script>
