@@ -1,61 +1,38 @@
 <!doctype html>
 <html>
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-PYF71QHYGW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-PYF71QHYGW');
-</script>
-  <meta name="google-site-verification" content="xJ7kumrpVb3ravD4RvPZ1eZt_U5lP4TVMT0I2wGiPmk" />
-  <script type="text/javascript" data-cmp-ab="1" src="https://cdn.consentmanager.net/delivery/autoblocking/8ef27f59c2c24.js" data-cmp-host="b.delivery.consentmanager.net" data-cmp-cdn="cdn.consentmanager.net" data-cmp-codesrc="16"></script>
-  <meta charset="utf-8">
-  <title>Incon2131</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<title>Incon2131</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-<header class="topbar">
-  <img src="Beta 31.6 logo.png" class="logo-2016" alt="Incon2131" width="125px" height="50px">
 
-  <div class="actions">
-    <button id="loginBtn" class="btn">Sign in</button>
-    <button id="logoutBtn" class="btn" style="display:none">Sign out</button>
-  </div>
+<header class="topbar">
+<img src="topbar.png" class="topbar-bg">
+<img src="logo.png" class="logo">
+<div class="actions">
+<button id="loginBtn">Sign in</button>
+<button id="logoutBtn" style="display:none">Sign out</button>
+</div>
 </header>
 
+
 <main class="feed">
+<div class="card share" id="shareBox">
+<textarea id="postBody" placeholder="What's new?"></textarea>
+<button id="submitPostBtn">Post</button>
+</div>
 
-  <div class="card share-card">
-    <textarea id="postBody" placeholder="Share what’s new…"></textarea>
 
-    <div class="share-actions">
-      <input id="postImage" type="file" accept="image/*">
-      <button id="submitPostBtn" class="primary">Post</button>
-    </div>
-
-    <div id="postingStatus" class="status"></div>
-  </div>
-
-  <div id="posts" class="post-grid"></div>
-
+<div id="posts"></div>
 </main>
 
-<!-- 🔥 FIREBASE COMPAT (NO CORS ISSUES) -->
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-
 <script src="forum.js"></script>
 </body>
 </html>
-
-
-
-
