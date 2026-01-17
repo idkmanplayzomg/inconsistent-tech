@@ -1,65 +1,55 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
-  authDomain: "inconforum.firebaseapp.com",
-  projectId: "inconforum",
-  appId: "1:1545059128:web:2327d2fce916a85e659fcd"
+apiKey: "AIzaSyATdGm6FTkeLlbbQr36CtB-kwN0LC3PGoI",
+authDomain: "inconforum.firebaseapp.com",
+projectId: "inconforum",
+appId: "1:1545059128:web:2327d2fce916a85e659fcd"
 };
 
+
 if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+
 
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-const params = new URLSearchParams(location.search);
-const profileUid = params.get("uid");
+
+const uid = new URLSearchParams(location.search).get("uid");
+let me = null;
+
+
+auth.onAuthStateChanged(u => me = u);
+
 
 const avatar = document.getElementById("avatar");
 const username = document.getElementById("username");
-const bio = document.getElementById("bio");
-const editUI = document.getElementById("editUI");
+const save = document.getElementById("save");
+const input = document.getElementById("avatarInput");
 
-const avatarInput = document.getElementById("avatarInput");
-const bioInput = document.getElementById("bioInput");
-const saveBtn = document.getElementById("saveBtn");
 
-let currentUser = null;
+let avatarData = "";
 
-auth.onAuthStateChanged(user => {
-  currentUser = user;
-  loadProfile();
-});
 
-async function loadProfile() {
-  const snap = await db.collection("users").doc(profileUid).get();
-  if (!snap.exists) return;
-
-  const data = snap.data();
-  avatar.src = data.avatar || "default.png";
-  username.textContent = data.username || "User";
-  bio.textContent = data.bio || "";
-
-  if (currentUser && currentUser.uid === profileUid) {
-    editUI.style.display = "block";
-    bioInput.value = data.bio || "";
-  }
-}
-
-avatarInput.onchange = () => {
-  const file = avatarInput.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = () => avatar.src = reader.result;
-  reader.readAsDataURL(file);
+input.onchange = e => {
+const reader = new FileReader();
+reader.onload = () => avatarData = reader.result;
+reader.readAsDataURL(e.target.files[0]);
 };
 
-saveBtn.onclick = async () => {
-  if (!currentUser || currentUser.uid !== profileUid) return;
 
-  await db.collection("users").doc(profileUid).set({
-    avatar: avatar.src,
-    bio: bioInput.value
-  }, { merge: true });
+const docRef = db.collection("users").doc(uid);
 
-  alert("Saved!");
+
+docRef.get().then(d => {
+const u = d.data();
+username.textContent = u.username;
+avatar.src = u.avatar || "default.png";
+
+
+if (me && me.uid === uid) save.style.display = "block";
+});
+
+
+save.onclick = async () => {
+await docRef.update({ avatar: avatarData });
+location.reload();
 };
