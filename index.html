@@ -1,38 +1,49 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Incon2131</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8">
+  <title>Incon2131</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-
 <header class="topbar">
-<img src="topbar.png" class="topbar-bg">
-<img src="logo.png" class="logo">
-<div class="actions">
-<button id="loginBtn">Sign in</button>
-<button id="logoutBtn" style="display:none">Sign out</button>
-</div>
+  <div class="topbar-inner">
+    <img src="logo.png" class="logo" alt="Incon2131">
+
+    <div class="actions">
+      <button id="loginBtn" class="btn">Sign in</button>
+      <button id="logoutBtn" class="btn" style="display:none">Sign out</button>
+    </div>
+  </div>
 </header>
 
+<main class="page">
 
-<main class="feed">
-<div class="card share" id="shareBox">
-<textarea id="postBody" placeholder="What's new?"></textarea>
-<button id="submitPostBtn">Post</button>
-</div>
+  <div class="share-card">
+    <textarea id="postBody" placeholder="What's new?"></textarea>
 
+    <div class="share-actions">
+      <input id="postImage" type="file" accept="image/*">
+      <button id="submitPostBtn" class="primary">Post</button>
+    </div>
 
-<div id="posts"></div>
+    <div id="postingStatus" class="status"></div>
+  </div>
+
+  <div id="posts" class="post-grid"></div>
+
 </main>
 
-
+<!-- Firebase (unchanged) -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+
 <script src="forum.js"></script>
 </body>
 </html>
