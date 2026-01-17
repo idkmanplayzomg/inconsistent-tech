@@ -1,30 +1,25 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Profile</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<title>Profile</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
 
-<div id="profile" class="profile-card">
-  <img id="avatar" class="profile-avatar">
-  <h2 id="username"></h2>
-  <p id="bio"></p>
 
-  <div id="editUI" style="display:none">
-    <input type="file" id="avatarInput" accept="image/*" capture="environment">
-    <textarea id="bioInput" placeholder="Edit bio"></textarea>
-    <button id="saveBtn">Save</button>
-  </div>
+<div class="profile">
+<img id="avatar" class="profile-avatar">
+<h1 id="username"></h1>
+<input type="file" id="avatarInput" accept="image/*">
+<button id="save" style="display:none">Save</button>
 </div>
+
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
 <script src="profile.js"></script>
 </body>
 </html>
