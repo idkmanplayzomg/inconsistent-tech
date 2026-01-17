@@ -1,14 +1,90 @@
-body { margin:0; font-family:sans-serif; background:url(Background.png); color:#fff }
-.topbar { height:56px; background:url(topbar.png); display:flex; align-items:center; padding:0 10px }
-.logo { height:36px }
-.feed { max-width:700px; margin:auto; padding:10px }
-.card { background:rgba(0,0,0,.7); padding:10px; border-radius:8px; margin-bottom:10px }
-.post-header { display:flex; align-items:center; gap:10px }
-.avatar { width:40px; height:40px; border-radius:50% }
-.username { color:#4aa3ff; text-decoration:none }
-.time { margin-left:auto; font-size:12px; opacity:.6 }
-.auth { display:flex; justify-content:center; align-items:center; min-height:100vh }
-.auth-card { background:#111; padding:20px; border-radius:10px }
-.login-logo { width:140px; margin-bottom:10px }
-.profile { text-align:center; padding:20px }
-.profile-avatar { width:120px; height:120px; border-radius:50% }
+/* RESET */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: url("Background.png") repeat;
+}
+
+/* TOP BAR */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  background: url("topbar.png") repeat-x;
+}
+
+.logo {
+  height: 36px;
+  width: auto;
+}
+
+/* FEED */
+.feed {
+  max-width: 700px;
+  margin: auto;
+  padding: 12px;
+}
+
+/* POSTS */
+.post {
+  margin-bottom: 12px;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.username {
+  font-weight: 600;
+  text-decoration: none;
+  color: #4aa3ff;
+}
+
+.time {
+  margin-left: auto;
+  font-size: 12px;
+  opacity: 0.6;
+}
+
+/* CARD */
+.card {
+  background: rgba(20,20,20,0.85);
+  border-radius: 8px;
+  padding: 12px;
+  color: #fff;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .feed {
+    padding: 8px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .time {
+    display: none;
+  }
+}
